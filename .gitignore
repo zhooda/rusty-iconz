@@ -1,2 +1,3 @@
 /target
 testdir/
+src/template.rs
