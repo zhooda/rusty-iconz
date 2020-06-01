@@ -16,13 +16,13 @@ These instructions will get you a copy of the project up and running on your loc
 ### Installing 
 
 Clone the repository
-```
+```bash
 $ git clone https://github.com/zhooda/rusty-iconz.git
 $ cd rusty-icons
 ```
 
 Build/Run for debug using Cargo
-```
+```bash
 rusty-iconz$ cargo run # with command line arguments OR
 rusty-iconz$ cargo build # to compile but not run
 
@@ -30,7 +30,7 @@ rusty-iconz$ cargo build # to compile but not run
 ```
 
 Build for release (if you want to add it to your $PATH)
-```
+```bash
 rusty-iconz$ cargo build --release
 # The binary will be rusty-iconz/target/release/iconz
 ```
@@ -38,7 +38,7 @@ rusty-iconz$ cargo build --release
 ### Usage
 
 If iconz is added to your $PATH env variable you can simply call it like any other command. The command line arguments needed are `source image` and `icon directory`
-```
+```bash
 $ iconz sourceimage.png icondir
     # sourceimage.png -> ./icondir/AppIcon20x20@2x
     # sourceimage.png -> ./icondir/AppIcon20x20@3x
