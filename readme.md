@@ -2,7 +2,7 @@
 
 A simple CLI to generate all those pesky Xcode icon sizes from one single source file. This is the first project I've writtin in Rust so there will be plenty of bad code but that's okay :)
 
-~~Currently, this project uses shell commands for Imagemagick to resize images; however, once I figure out how to use a Rust image manipulation library I'll get rid of the shell commands and Imagemagick dependency.~~ Iconz now uses the [image](https://crates.io/crates/image) crate to resize images using the CatmullRom algorithm. If you have Imagemagick installed and would like to use it instead, just use the ```bash -m``` or ```bash --magic``` flags.
+~~Currently, this project uses shell commands for Imagemagick to resize images; however, once I figure out how to use a Rust image manipulation library I'll get rid of the shell commands and Imagemagick dependency.~~ Iconz now uses the [image](https://crates.io/crates/image) crate to resize images using the CatmullRom algorithm. If you have Imagemagick installed and would like to use it instead, just use the ```-m``` or ```--magic``` flags.
 
 ***WARNING:*** There is currently no error handling which means if you enter an invalid file path, the program will crash
 
@@ -54,8 +54,7 @@ $ iconz --magic sourceimage.png icondir
     ...
     kthxbye;
 ```
-Command line flags
-
+##### Command line flags
 | Flag        |                          Description                          |
 | :---------- | :-----------------------------------------------------------: |
 | no flag     |                      Uses -i by default                       |
