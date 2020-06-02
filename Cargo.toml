@@ -1,6 +1,6 @@
 [package]
 name = "iconz"
-version = "0.1.0"
+version = "0.1.2"
 authors = ["Zeeshan Hooda <zeeshanhooda@icloud.com>"]
 edition = "2018"
 
