@@ -32,9 +32,6 @@ fn main() {
     let magic = options.magic;
     let image = options.image;
 
-
-    debug!("[{}, {}, {}, {}]", &source, &directory, &magic, &image);
-
     let is_valid= std::path::Path::new(&source).exists();
     if !is_valid {
         let errmsg = format!("error:");
