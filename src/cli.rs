@@ -1,3 +1,7 @@
+extern crate colored;
+
+use colored::*;
+
 // Writes message to stderr and returns error code
 pub fn err(stderr: String, code: i32) {
     eprintln!("{}", stderr);
@@ -17,4 +21,9 @@ pub fn start(name: &str, version: &str, message: &str) {
 // Display a goodbye message for the CLI
 pub fn end() {
     println!("\nkthxbye;");
+}
+
+// Pretty printing
+pub fn pretty(src: String, end: String) {
+    println!("{} {} {} {}", "\u{2714}".bright_green(), src.italic(), "\u{279c}".bright_green(), end.bright_cyan().italic());
 }

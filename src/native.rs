@@ -2,9 +2,12 @@ extern crate image;
 
 use image::ImageBuffer;
 
+use crate::cli;
+
 // A function that resizes an image buffer and saves it to a specified location
 pub fn resize(buff: ImageBuffer<image::Rgb<u8>, Vec<u8>>, srcname: &str, width: u32, height: u32, name: String, ipad: bool) {
-    println!("[IMAGE]: {} -> {}", &srcname, &name);
+    // println!("[IMAGE]: {} -> {}", &srcname, &name);
+    cli::pretty(srcname.to_owned(), name.to_owned());
     let icname = if ipad == true { format!("{}~ipad.png", &name) } else { format!("{}.png", &name) };
     let resized = image::imageops::resize(&buff, width, height, image::imageops::FilterType::CatmullRom);
     resized.save(icname);

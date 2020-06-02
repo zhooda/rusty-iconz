@@ -1,50 +1,54 @@
-#![allow(unused_assignments)]
-#![allow(unused_must_use)]
+extern crate colored;
+extern crate structopt;
 
-extern crate image;
+#[macro_use] extern crate log;
 
-mod cli;
-mod icon;
+use colored::*;
+use structopt::StructOpt;
+
+mod magic;
 mod native;
+mod cli;
+
+#[derive(StructOpt)]
+struct Options {
+    source: String, // [1]
+    directory: String, // [2]
+
+    #[structopt(short = "m", long = "magic")]
+    /// Uses Imagemagick for conversions and requires Imagemagick to be installed (slower)
+    magic: bool,
+
+    #[structopt(short = "i", long = "image")]
+    /// Uses the CatmullRoll algorithm and doesnt require any dependencies (faster)
+    image: bool,
+}
 
 fn main() {
+    // Get all command line options
+    let options = Options::from_args();
+    let source = options.source;
+    let directory = options.directory;
+    let magic = options.magic;
+    let image = options.image;
 
-    let argv: Vec<String> = std::env::args().collect();
 
-    // At least two arguments (source image and directory) must be specified
-    if argv.len() < 3 {
-        cli::usage(argv[0].clone());
-    // The -m or --magic flag is used
+    debug!("[{}, {}, {}, {}]", &source, &directory, &magic, &image);
+
+    let is_valid= std::path::Path::new(&source).exists();
+    if !is_valid {
+        let errmsg = format!("error:");
+        eprintln!("{} The file path {} was invalid", errmsg=errmsg.red().bold(), src=source.clone().blue().underline());
+        std::process::exit(-1);
     }
-    
-    if &argv[1] == "-m" || &argv[1] == "--magic" {
-        let is_valid= std::path::Path::new(&argv[2]).exists();
-        if is_valid {
-            cli::start("iconz", "0.1.2", "make xcode icons\n#blacklivesmatter http://ally.wiki");
-            icon::make_for_xcode(&argv[2], &argv[3]);
-        } else {
-            cli::err(format!("[iconz error]: {} is an invalid file path", &argv[2]), -1);
-        }
-    // The -i or --image flag is used
-    } else if argv.len() == 4 {
-        let is_valid= std::path::Path::new(&argv[2]).exists();
-        if is_valid {
-            cli::start("iconz", "0.1.2", "make xcode icons\n#blacklivesmatter http://ally.wiki");
-            let buffer = image::open(&argv[2]).unwrap().into_rgb();
-            native::make_for_xcode(buffer, &argv[2], &argv[3]);
-        } else {
-            cli::err(format!("[iconz error]: {} is an invalid file path", &argv[2]), -1);
-        }
-    // No flags are used -> Defaults to -i instead of -m
+
+    if magic {
+        cli::start("iconz", "0.2.0", "make xcode icons\n#blacklivesmatter http://ally.wiki");
+        magic::make_for_xcode(&source, &directory);
     } else {
-        let is_valid= std::path::Path::new(&argv[1]).exists();
-        if is_valid {
-            cli::start("iconz", "0.1.2", "make xcode icons\n#blacklivesmatter http://ally.wiki");
-            let buffer = image::open(&argv[1]).unwrap().into_rgb();
-            native::make_for_xcode(buffer, &argv[1], &argv[2]);
-        } else {
-            cli::err(format!("[iconz error]: {} is an invalid file path", &argv[1]), -1);
-        }
+        cli::start("iconz", "0.1.2", "make xcode icons\n#blacklivesmatter http://ally.wiki");
+            let buffer = image::open(&source).unwrap().into_rgb();
+            native::make_for_xcode(buffer, &source, &directory);
     }
 
     cli::end();

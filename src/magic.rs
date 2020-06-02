@@ -1,5 +1,8 @@
+use crate::cli;
+
 pub fn resize(src: String, dim: Vec<i32>, name: String, ipad: bool) {
-    println!("[MAGIC]: {} -> {}", &src, &name);
+    // println!("[MAGIC]: {} -> {}", &src, &name);
+    cli::pretty(src.to_owned(), name.to_owned());
     let icname = if ipad == true { format!("{}~ipad.png", &name) } else { format!("{}.png", &name) };
     std::process::Command::new("convert")
         .arg(src)
@@ -18,8 +21,8 @@ pub fn scale(src: String, dim: Vec<i32>, name: String, scales: Vec<i32>, ipad: b
 }
 
 pub fn make_for_xcode(src: &str, dir: &str) {
-    std::fs::remove_dir_all(dir);
-    std::fs::create_dir(dir);
+    std::fs::remove_dir_all(dir).expect("Could not clear directory");
+    std::fs::create_dir(dir).expect("Could not create directory");
     scale(src.to_owned(), [20, 20].to_vec(), format!("./{}/AppIcon20x20", dir), [2, 3].to_vec(), false);
     scale(src.to_owned(), [29, 29].to_vec(), format!("./{}/AppIcon29x29", dir), [2, 3].to_vec(), false);
     scale(src.to_owned(), [40, 40].to_vec(), format!("./{}/AppIcon40x40", dir), [2, 3].to_vec(), false);
