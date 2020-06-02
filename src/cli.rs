@@ -4,14 +4,9 @@ pub fn err(stderr: String, code: i32) {
     std::process::exit(code);
 }
 
-// Collects command line arguments, verifies them,
-// and returns a clone of them as a Vec<String>
-pub fn verify_args(min: usize) -> Vec<String> {
-    let args: Vec<String> = std::env::args().collect();
-    if args.len() < (min + 1) {
-        err(format!("USAGE:\n    {} <source image> <icon directory>\n", &args[0]), -1);
-    }
-    return args.clone();
+// Writes the usage message to stderr
+pub fn usage(prog: String) {
+    err(format!("USAGE:\n    {} [flags] <source image> <icon directory>\n\nFLAGS:\n    -m, --magic ...... convert using imagemagick (default)\n    -i, --image ...... convert using rust image crate (slower)\n", prog), -1);
 }
 
 // Display some welcome info for the CLI

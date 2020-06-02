@@ -1,5 +1,5 @@
 pub fn resize(src: String, dim: Vec<i32>, name: String, ipad: bool) {
-    println!("{} -> {}", &src, &name);
+    println!("[MAGIC]: {} -> {}", &src, &name);
     let icname = if ipad == true { format!("{}~ipad.png", &name) } else { format!("{}.png", &name) };
     std::process::Command::new("convert")
         .arg(src)

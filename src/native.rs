@@ -1,11 +1,38 @@
 extern crate image;
 
-// use std::io::File;
+use image::ImageBuffer;
 
-pub fn run(src: &str) {
-    // let image = image::io::Reader::open(src)?.decode();
-    // let copy = image::imageops::resize(&image, 200, 200, image::imageops::FilterType::Lanczos3);
-    let orig = image::open("appstore.png").unwrap().into_rgb();
-    let resized = image::imageops::resize(&orig, 200, 200, image::imageops::FilterType::Lanczos3);
-    resized.save("edited.png");
+// A function that resizes an image buffer and saves it to a specified location
+pub fn resize(buff: ImageBuffer<image::Rgb<u8>, Vec<u8>>, srcname: &str, width: u32, height: u32, name: String, ipad: bool) {
+    println!("[IMAGE]: {} -> {}", &srcname, &name);
+    let icname = if ipad == true { format!("{}~ipad.png", &name) } else { format!("{}.png", &name) };
+    let resized = image::imageops::resize(&buff, width, height, image::imageops::FilterType::CatmullRom);
+    resized.save(icname);
+}
+
+// A function that generates multiple scales of an icon
+pub fn scale(buff: ImageBuffer<image::Rgb<u8>, Vec<u8>>, srcname: &str, width: u32, height: u32, name: String, scales: Vec<u32>, ipad: bool) {
+    for scale in scales {
+        let scale_string = if scale > 1 { format!("{}@{}x", &name, &scale)} else { format!("{}", &name) };
+        resize(buff.to_owned(), srcname, width*scale, height*scale, scale_string, ipad);
+    }
+}
+
+// A functino that generates all the icons necessary for an Xcode project
+pub fn make_for_xcode(buff: ImageBuffer<image::Rgb<u8>, Vec<u8>>, srcname: &str, dir: &str) {
+    std::fs::remove_dir_all(dir);
+    std::fs::create_dir(dir);
+    scale(buff.to_owned(), srcname, 20, 20, format!("./{}/AppIcon20x20", dir), [2, 3].to_vec(), false);
+    scale(buff.to_owned(), srcname, 29, 29, format!("./{}/AppIcon29x29", dir), [2, 3].to_vec(), false);
+    scale(buff.to_owned(), srcname, 40, 40, format!("./{}/AppIcon40x40", dir), [2, 3].to_vec(), false);
+    scale(buff.to_owned(), srcname, 60, 60, format!("./{}/AppIcon60x60", dir), [2, 3].to_vec(), false);
+    scale(buff.to_owned(), srcname, 20, 20, format!("./{}/AppIcon20x20", dir), [1, 2].to_vec(), true);
+    scale(buff.to_owned(), srcname, 29, 29, format!("./{}/AppIcon29x29", dir), [1, 2].to_vec(), true);
+    scale(buff.to_owned(), srcname, 40, 40, format!("./{}/AppIcon40x40", dir), [1, 2].to_vec(), true);
+    scale(buff.to_owned(), srcname, 76, 76, format!("./{}/AppIcon76x76", dir), [1, 2].to_vec(), true);
+    scale(buff.to_owned(), srcname, 167, 167, format!("./{}/AppIcon83.5x83.5@2x", dir), [1].to_vec(), true);
+    scale(buff.to_owned(), srcname, 512, 512, format!("./{}/mac", dir), [1].to_vec(), false);
+    scale(buff.to_owned(), srcname, 1024, 1024, format!("./{}/AppStoreIcon", dir), [1].to_vec(), false);
+    scale(buff.to_owned(), srcname, 57, 57, format!("./{}/manifest/AppIcon57x57", dir), [1].to_vec(), false);
+    scale(buff.to_owned(), srcname, 512, 512, format!("./{}/manifest/AppIcon512x512", dir), [1].to_vec(), false);
 }
