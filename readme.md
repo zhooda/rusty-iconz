@@ -54,7 +54,7 @@ $ iconz --magic sourceimage.png icondir
     ...
     kthxbye;
 ```
-##### Command line flags
+#### Command line flags
 | Flag        |                          Description                          |
 | :---------- | :-----------------------------------------------------------: |
 | no flag     |                      Uses -i by default                       |
