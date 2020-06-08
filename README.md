@@ -4,13 +4,17 @@
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ggez/ggez/blob/master/LICENSE)
 [![Crates.io](https://img.shields.io/crates/v/ggez.svg)](https://crates.io/crates/ggez)
 
-A simple CLI to generate all those pesky Xcode icon sizes from one single source file. This is the first project I've writtin in Rust so there will be plenty of bad code but that's okay :)
+A simple CLI to generate all those pesky Xcode icon sizes from one single source file. This is the first project I've written in Rust so there will be plenty of bad code but that's okay :)
 
-~~Currently, this project uses shell commands for Imagemagick to resize images; however, once I figure out how to use a Rust image manipulation library I'll get rid of the shell commands and Imagemagick dependency.~~ Iconz now uses the [image](https://crates.io/crates/image) crate to resize images using the CatmullRom algorithm. If you have Imagemagick installed and would like to use it instead, just use the ```-m``` or ```--magic``` flags.
+Iconz now uses the [image](https://crates.io/crates/image) crate to resize images using the CatmullRom algorithm. If you have Imagemagick installed and would like to use it instead, just use the ```-m``` or ```--magic``` flags.
 
 ***WARNING:*** There is currently no error handling which means if you enter an invalid file path, the program will crash
 
-## Getting Started
+## Install a pre-compiled binary
+
+If you want to install a pre-compiled binary, go to the [```bin/```](https://github.com/zhooda/rusty-iconz/tree/master/bin) folder and download the correct binary for your platform.
+
+## Building from source
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
@@ -22,7 +26,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Dependencies
 - **OPTIONAL** [Imagemagick](https://imagemagick.org/script/download.php)
 
-### Installing 
+### Installing
 
 Clone the repository
 ```bash
