@@ -3,7 +3,7 @@
 ![ubuntu](https://img.shields.io/github/workflow/status/zhooda/rusty-iconz/ubuntu?label=ubuntu&logo=ubuntu&logoColor=white)
 ![macos](https://img.shields.io/github/workflow/status/zhooda/rusty-iconz/macos?label=macOS&logo=apple&logoColor=white)
 ![windows](https://img.shields.io/github/workflow/status/zhooda/rusty-iconz/windows?label=windows&logo=windows&logoColor=white)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg?style=plastic&logo=appveyor)](https://github.com/zhooda/rusty-iconz/blob/master/LICENSE.md)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/zhooda/rusty-iconz/blob/master/LICENSE.md)
 
 A simple CLI to generate all those pesky Xcode icon sizes from one single source file. This is the first project I've written in Rust so there will be plenty of bad code but that's okay :)
 
