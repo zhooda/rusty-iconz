@@ -1,6 +1,8 @@
 # rusty-iconz
 
 ![Rust](https://github.com/zhooda/rusty-iconz/workflows/Rust/badge.svg?event=push)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ggez/ggez/blob/master/LICENSE)
+[![Crates.io](https://img.shields.io/crates/v/ggez.svg)](https://crates.io/crates/ggez)
 
 A simple CLI to generate all those pesky Xcode icon sizes from one single source file. This is the first project I've writtin in Rust so there will be plenty of bad code but that's okay :)
 
