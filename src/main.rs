@@ -50,3 +50,33 @@ fn main() {
 
     cli::end();
 }
+
+#[cfg(test)]
+mod iconz_tests {
+    use super::*;
+
+    #[test]
+    fn test_buffer() {
+        let _buffer = image::open("./tests/test-icon.png").unwrap().into_rgb();
+    }
+
+    #[test]
+    fn test_resize() {
+        let assert_value: (u32, u32) = (200, 200);
+        let buffer = image::open("./tests/test-icon.png").unwrap().into_rgb();
+        native::resize(buffer, "./tests/test-icon.png", 200, 200, "./tests/test-icon-resized".to_owned(), false);
+        let resized_buffer = image::open("./tests/test-icon-resized.png").unwrap().into_rgb();
+        assert_eq!(assert_value, resized_buffer.dimensions());
+    }
+
+    #[test]
+    fn test_name() {
+        let buffer = image::open("./tests/test-icon.png").unwrap().into_rgb();
+        native::resize(buffer.clone(), "./tests/test-icon.png", 200, 200, "./tests/test-icon-name".to_owned(), false);
+        native::resize(buffer, "./tests/test-icon.png", 200, 200, "./tests/test-icon-name".to_owned(), true);
+        let iphone_valid = std::path::Path::new("./tests/test-icon-name.png").exists();
+        let ipad_valid = std::path::Path::new("./tests/test-icon-name~ipad.png").exists();
+        assert_eq!(true, iphone_valid);
+        assert_eq!(true, ipad_valid);
+    }
+}
