@@ -8,6 +8,10 @@ homepage = "https://github.com/zhooda/rusty-iconz"
 repository = "https://github.com/zhooda/rusty-iconz"
 readme = "README.md"
 edition = "2018"
+include = [
+    "**/*.rs",
+    "Cargo.toml",
+]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
