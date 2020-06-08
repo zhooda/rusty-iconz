@@ -11,9 +11,15 @@ Iconz now uses the [image](https://crates.io/crates/image) crate to resize image
 
 ***WARNING:*** There is currently no error handling which means if you enter an invalid file path, the program will crash
 
-## Install a pre-compiled binary
+## Install from Cargo
 
-If you want to install a pre-compiled binary, go to the [```bin/```](https://github.com/zhooda/rusty-iconz/tree/master/bin) folder and download the correct binary for your platform.
+You must have [rust & cargo](https://www.rust-lang.org) installed before you can install iconz.
+
+Install the latest published version iconz:
+
+```bash
+$ cargo install iconz
+```
 
 ## Building from source
 
