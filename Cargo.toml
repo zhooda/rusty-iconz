@@ -1,6 +1,6 @@
 [package]
 name = "iconz"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Zeeshan Hooda <me@zeeshan.wtf>"]
 license = "MIT"
 description = "A simple CLI to generate all all of the Xcode icons from one single source file"
