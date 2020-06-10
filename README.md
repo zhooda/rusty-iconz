@@ -7,9 +7,7 @@
 
 A simple CLI to generate all those pesky Xcode icon sizes from one single source file. This is the first project I've written in Rust so there will be plenty of bad code but that's okay :)
 
-Iconz now uses the [image](https://crates.io/crates/image) crate to resize images using the CatmullRom algorithm. If you have Imagemagick installed and would like to use it instead, just use the ```-m``` or ```--magic``` flags.
-
-***WARNING:*** There is currently no error handling which means if you enter an invalid file path, the program will crash
+***NEW:*** iconz now has some decent error handling. No more thread panics!
 
 ## Install from Cargo
 
@@ -25,14 +23,6 @@ $ cargo install iconz
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Prerequisites
-
-- [Rust 1.43.1](https://www.rust-lang.org)
-- [image](https://crates.io/crates/image) - A rust image encoding/decoding/manipulation library
-
-### Dependencies
-- **OPTIONAL** [Imagemagick](https://imagemagick.org/script/download.php)
-
 ### Installing
 
 Clone the repository
@@ -43,38 +33,44 @@ $ cd rusty-iconz
 
 Build/Run for debug using Cargo
 ```bash
-rusty-iconz$ cargo run # with command line arguments OR
-rusty-iconz$ cargo build # to compile but not run
+$ cargo run # with command line arguments OR
+$ cargo build # to compile but not run
 
 # The binary will be rusty-iconz/target/debug/iconz
 ```
 
 Build for release (if you want to add it to your $PATH)
 ```bash
-rusty-iconz$ cargo build --release
+$ cargo build --release
+$ cargo install
 # The binary will be rusty-iconz/target/release/iconz
 ```
 
 ### Usage
 
-If iconz is added to your $PATH env variable you can simply call it like any other command. The command line arguments needed are `source image` and `icon directory`
+If you used `cargo install` you can simply call it like any other command. The only command line arguments needed are `source image` and `icon directory`
 ```bash
 $ iconz --magic sourceimage.png icondir
-    sourceimage.png -> ./icondir/AppIcon20x20@2x
-    sourceimage.png -> ./icondir/AppIcon20x20@3x
-    sourceimage.png -> ./icondir/AppIcon29x29@2x
-    sourceimage.png -> ./icondir/AppIcon29x29@3x
-    sourceimage.png -> ./icondir/AppIcon40x40@2x
-    sourceimage.png -> ./icondir/AppIcon40x40@3x
-    ...
+    iconz v0.2.2
+    make xcode icons
+    ＃blacklivesmatter https://www.blacklivesmatters.com
+
+    ✔ appstore.png ➜ ./testdir/AppIcon20x20@2x
+    ✔ appstore.png ➜ ./testdir/AppIcon20x20@3x
+    ✔ appstore.png ➜ ./testdir/AppIcon29x29@2x
+    ✔ appstore.png ➜ ./testdir/AppIcon29x29@3x
+    ✔ appstore.png ➜ ./testdir/AppIcon40x40@2x
+    ✔ appstore.png ➜ ./testdir/AppIcon40x40@3x
+    ✔ appstore.png ➜ ./testdir/AppIcon60x60@2x
+    ✔ appstore.png ➜ ./testdir/AppIcon60x60@3x
+    # ...
     kthxbye;
 ```
 #### Command line flags
 | Flag        |                          Description                          |
 | :---------- | :-----------------------------------------------------------: |
 | no flag     |                      Uses -i by default                       |
-| -i, --image | Uses Rust *image* crate and CatmullRom algorithm for resizing |
-| -m, --magic |                 Uses Imagemagick for resizing                 |
+| -i, --image | Uses CatmullRom algorithm for resizing |
 
 ## Contributing
 
