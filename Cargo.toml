@@ -1,9 +1,9 @@
 [package]
 name = "iconz"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["Zeeshan Hooda <me@zeeshan.wtf>"]
 license = "MIT"
-description = "A simple CLI to generate all all of the Xcode icons from one single source file"
+description = "A simple CLI to generate all the necessary Xcode icon sizes from one single source file"
 homepage = "https://github.com/zhooda/rusty-iconz"
 repository = "https://github.com/zhooda/rusty-iconz"
 readme = "README.md"
