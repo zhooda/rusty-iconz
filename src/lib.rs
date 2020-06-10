@@ -1,16 +1,20 @@
+extern crate colored;
 extern crate image;
 
+use colored::*;
 use image::ImageBuffer;
 
-use crate::cli;
+// Pretty printing
+pub fn pretty(src: String, end: String) {
+    println!("{} {} {} {}", "\u{2714}".bright_green(), src.italic(), "\u{279c}".bright_green(), end.bright_cyan().italic());
+}
 
 // A function that resizes an image buffer and saves it to a specified location
 pub fn resize(buff: ImageBuffer<image::Rgb<u8>, Vec<u8>>, srcname: &str, width: u32, height: u32, name: String, ipad: bool) {
-    // println!("[IMAGE]: {} -> {}", &srcname, &name);
-    cli::pretty(srcname.to_owned(), name.to_owned());
     let icname = if ipad == true { format!("{}~ipad.png", &name) } else { format!("{}.png", &name) };
     let resized = image::imageops::resize(&buff, width, height, image::imageops::FilterType::CatmullRom);
-    resized.save(icname);
+    resized.save(icname).expect("Could not save file");
+    pretty(srcname.to_owned(), name.to_owned());
 }
 
 // A function that generates multiple scales of an icon
@@ -23,8 +27,10 @@ pub fn scale(buff: ImageBuffer<image::Rgb<u8>, Vec<u8>>, srcname: &str, width: u
 
 // A functino that generates all the icons necessary for an Xcode project
 pub fn make_for_xcode(buff: ImageBuffer<image::Rgb<u8>, Vec<u8>>, srcname: &str, dir: &str) {
-    std::fs::remove_dir_all(dir);
-    std::fs::create_dir(dir);
+    std::fs::remove_dir_all(dir).expect("Could not empty directory");
+    std::fs::create_dir(dir).expect("Could not create directory");
+    std::fs::create_dir(format!("{}/manifest", dir)).expect("Could not create directory");
+
     scale(buff.to_owned(), srcname, 20, 20, format!("./{}/AppIcon20x20", dir), [2, 3].to_vec(), false);
     scale(buff.to_owned(), srcname, 29, 29, format!("./{}/AppIcon29x29", dir), [2, 3].to_vec(), false);
     scale(buff.to_owned(), srcname, 40, 40, format!("./{}/AppIcon40x40", dir), [2, 3].to_vec(), false);

@@ -1,13 +1,10 @@
 extern crate colored;
 extern crate structopt;
 
-#[macro_use] extern crate log;
-
 use colored::*;
 use structopt::StructOpt;
 
-mod magic;
-mod native;
+mod lib;
 mod cli;
 
 #[derive(StructOpt)]
@@ -15,12 +12,8 @@ struct Options {
     source: String, // [1]
     directory: String, // [2]
 
-    #[structopt(short = "m", long = "magic")]
-    /// Uses Imagemagick for conversions and requires Imagemagick to be installed (slower)
-    magic: bool,
-
     #[structopt(short = "i", long = "image")]
-    /// Uses the CatmullRoll algorithm and doesnt require any dependencies (faster)
+    /// Uses the CatmullRoll algorithm (default)
     image: bool,
 }
 
@@ -29,7 +22,6 @@ fn main() {
     let options = Options::from_args();
     let source = options.source;
     let directory = options.directory;
-    let magic = options.magic;
     let image = options.image;
 
     let is_valid= std::path::Path::new(&source).exists();
@@ -39,13 +31,13 @@ fn main() {
         std::process::exit(-1);
     }
 
-    if magic {
-        cli::start("iconz", "0.2.0", "make xcode icons\n#blacklivesmatter http://ally.wiki");
-        magic::make_for_xcode(&source, &directory);
+    cli::start("iconz", "0.2.2", "make xcode icons\n#blacklivesmatter http://ally.wiki");
+    if image {
+        let buffer = image::open(&source).unwrap().into_rgb();
+        lib::make_for_xcode(buffer, &source, &directory);
     } else {
-        cli::start("iconz", "0.1.2", "make xcode icons\n#blacklivesmatter http://ally.wiki");
             let buffer = image::open(&source).unwrap().into_rgb();
-            native::make_for_xcode(buffer, &source, &directory);
+            lib::make_for_xcode(buffer, &source, &directory);
     }
 
     cli::end();
@@ -64,7 +56,7 @@ mod iconz_tests {
     fn test_resize() {
         let assert_value: (u32, u32) = (200, 200);
         let buffer = image::open("./tests/test-icon.png").unwrap().into_rgb();
-        native::resize(buffer, "./tests/test-icon.png", 200, 200, "./tests/test-icon-resized".to_owned(), false);
+        lib::resize(buffer, "./tests/test-icon.png", 200, 200, "./tests/test-icon-resized".to_owned(), false);
         let resized_buffer = image::open("./tests/test-icon-resized.png").unwrap().into_rgb();
         assert_eq!(assert_value, resized_buffer.dimensions());
     }
@@ -72,8 +64,8 @@ mod iconz_tests {
     #[test]
     fn test_name() {
         let buffer = image::open("./tests/test-icon.png").unwrap().into_rgb();
-        native::resize(buffer.clone(), "./tests/test-icon.png", 200, 200, "./tests/test-icon-name".to_owned(), false);
-        native::resize(buffer, "./tests/test-icon.png", 200, 200, "./tests/test-icon-name".to_owned(), true);
+        lib::resize(buffer.clone(), "./tests/test-icon.png", 200, 200, "./tests/test-icon-name".to_owned(), false);
+        lib::resize(buffer, "./tests/test-icon.png", 200, 200, "./tests/test-icon-name".to_owned(), true);
         let iphone_valid = std::path::Path::new("./tests/test-icon-name.png").exists();
         let ipad_valid = std::path::Path::new("./tests/test-icon-name~ipad.png").exists();
         assert_eq!(true, iphone_valid);
