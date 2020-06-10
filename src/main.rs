@@ -31,7 +31,7 @@ fn main() {
         std::process::exit(-1);
     }
 
-    cli::start("iconz", "0.2.2", "make xcode icons\n#blacklivesmatter http://ally.wiki");
+    cli::start("iconz", "0.2.2", "make xcode icons\n#blacklivesmatter https://www.blacklivesmatters.com");
     if image {
         let buffer = image::open(&source).unwrap().into_rgb();
         lib::make_for_xcode(buffer, &source, &directory);
