@@ -9,6 +9,14 @@ A simple CLI to generate all those pesky Xcode icon sizes from one single source
 
 ***NEW:*** iconz now has some decent error handling. No more thread panics!
 
+## Features
+
+- [x] Conversions without imagemagick
+- [x] Proper error handling
+- [ ] Export to packaged xcasset format
+- [ ] Support for iMessage icons
+- [ ] Support for scaling non-icon assets
+
 ## Install from Cargo
 
 You must have [rust & cargo](https://www.rust-lang.org) installed before you can install iconz.
@@ -39,10 +47,10 @@ $ cargo build # to compile but not run
 # The binary will be rusty-iconz/target/debug/iconz
 ```
 
-Build for release (if you want to add it to your $PATH)
+Build for release
 ```bash
 $ cargo build --release
-$ cargo install
+$ cargo run --release -- -i appicon.png testdir
 # The binary will be rusty-iconz/target/release/iconz
 ```
 
