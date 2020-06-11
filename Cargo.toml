@@ -1,6 +1,6 @@
 [package]
 name = "iconz"
-version = "0.2.2"
+version = "0.3.0 beta"
 authors = ["Zeeshan Hooda <me@zeeshan.wtf>"]
 license = "MIT"
 description = "A simple CLI to generate all the necessary Xcode icon sizes from one single source file"
