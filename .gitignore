@@ -2,3 +2,4 @@
 testdir/
 src/template.rs
 Assets.xcassets/
+.DS_Store
